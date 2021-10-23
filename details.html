@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+</head>
+
+<body>
+<div id="bod"></div>
+
+
+</body>
+
+
+
+
+
+
+
+
+<script>
+var bodd=document.getElementById("bod");
+bodd.innerHTML=null;
+var title=localStorage.getItem("titl");
+var imag=localStorage.getItem("img");
+var desc=localStorage.getItem("desc");
+var titlea=document.createElement("h2");
+var image=document.createElement("img");
+var desc1=document.createElement("p");
+
+titlea.textContent=title;
+desc1.textContent=desc;
+image.src=imag;
+
+image.style.height="160px";
+image.style.width="200px";
+bodd.appendChild(titlea);
+bodd.appendChild(desc1);
+bodd.appendChild(image);
+</script>
+
+</html>
