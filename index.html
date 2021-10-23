@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<style>
+body {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
+
+#container{
+display:grid;
+grid-template-columns:auto auto;
+grid-template-rows:auto;
+grid-gap:3%;
+
+}
+
+#container > div{
+
+border:1px dotted black;
+display:flex;
+cursor:pointer;
+padding:10px;
+}
+
+#container > div >img{
+object-fit:contain;
+
+}
+
+#container > div >img:hover{
+ transform:scale(1.2);
+
+}
+
+button{
+
+cursor:pointer;
+border:0px;
+margin-top:5%;
+background-color:white;
+
+}
+</style>
+</head>
+<body>
+<h1>Home.html</h1>
+<h2> Top headlines</h2>
+<h3 id="abc"></h3>
+<div id="container"></div>
+
+
+
+</body>
+<script>
+    var big=document.getElementById("container");
+    var title1=document.getElementById("abc");
+  //api key e3cfb822532547eaabf3efe8292dd517
+  // rand GET https://newsapi.org/v2/top-headlines?country=us&apiKey=e3cfb822532547eaabf3efe8292dd517
+   fetch("http://newsapi.org/v2/top-headlines?country=us&apiKey=e3cfb822532547eaabf3efe8292dd517").then(function(res){
+    
+    return res.json();
+    
+  }).then(function(res){
+    
+   var alist=res["articles"];
+   var titlesc=[];
+   var imgc=[];
+// console.log();
+   alist.forEach(function(item)
+   {
+        //console.log(item);
+          var singl=document.createElement("div");
+          var t1=document.createElement("h5");
+          t1.textContent=item["title"];
+          var img1=document.createElement("img");
+          img1.style.height="160px";
+          img1.style.width="300px";
+          img1.src=item["urlToImage"];
+          
+          singl.setAttribute("href","http://127.0.0.1:8000/details.html");
+          img1.addEventListener("mouseover",function(){
+		localStorage.removeItem("titl");
+	        localStorage.removeItem("img");
+                localStorage.removeItem("desc");
+                localStorage.setItem("titl",item["title"]);
+                 localStorage.setItem("img",item["urlToImage"]);
+                 localStorage.setItem("desc",item["description"]);
+                  t1.style.color="green";
+               
+});
+
+       var butt=document.createElement("button");
+          butt.innerText="Read More --->";
+          t1.append(butt);
+          singl.append(t1);
+          singl.append(img1);
+          big.appendChild(singl);
+   });
+    //title1.textContent=res["articles"][0]["title"];
+  }).catch(function(err){
+    
+    
+    console.log(err);
+    
+  });
+
+</script>
+</html>
