@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<style>
+#scont{
+	
+  display:grid;
+  grid-template-columns:auto auto auto auto;
+  grid-template-rows:auto;
+  grid-gap:20px;
+  
+}
+</style>
+</head>
+<body>
+<h1>Search page</h1>
+  
+  <input id="searc" type="text" placeholder="Search"></input> 
+<button onclick="se()">Search</button>
+<p id="ab"></p>
+  <div id="scont"></div>
+</body>
+<script>
+  var tes=document.getElementById("ab");
+  var bigs=document.getElementById("scont");
+  function se(){
+bigs.innerHTML=null;
+var sitem=document.getElementById("searc").value;
+ 
+    tes.textContent="Showing search results for "+ sitem;
+    
+    fetch(`https://newsapi.org/v2/everything?q=${sitem}&language=en&apiKey=e3cfb822532547eaabf3efe8292dd517`).then(function(res){
+     return res.json(); 
+    }).then(function(res){
+      
+      var arti=res["articles"];
+      console.log(res);
+      for(var i=0;i<20;i++)
+      { 
+          var card1=document.createElement("div");
+          var titl=document.createElement("p");
+          var imgs1=document.createElement("img");
+          imgs1.style.height="120px";
+          imgs1.style.width="200px";
+          var desc1=document.createElement("p");
+          
+          titl.textContent=arti[i]["title"];
+          imgs1.src=arti[i]["urlToImage"];
+          desc1.textContent=arti[i]["description"];
+        
+          card1.append(titl);
+          card1.append(imgs1);
+          card1.append(desc1);
+          bigs.appendChild(card1);
+      }
+      
+    }).catch(function(err){
+      
+      console.log(err);
+    });
+  }
+</script>
+</html>
